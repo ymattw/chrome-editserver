@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-# -*- tab-width:2; indent-tabs-mode:t -*- vim: set noet ts=2:
 
 # Copyright (C) 2009  David Hilley <davidhi@cc.gatech.edu>
 # Copyright (C) 2010  Matt DeVuyst <mdevuyst@gmail.com>
@@ -177,4 +176,3 @@ def main():
 
 if __name__ == '__main__':
 	main()
-
