@@ -28,7 +28,7 @@ import sys
 import tempfile
 import time
 
-_default_port = 9292
+DEFAULT_PORT = 9292
 _default_editor = "rgvim,-f"
 
 temp_has_delete=True
@@ -153,8 +153,8 @@ class Handler(BaseHTTPServer.BaseHTTPRequestHandler):
 def parse_options():
     parser = optparse.OptionParser()
     parser.add_option(
-        "-p", "--port", type="int", dest="port", default=_default_port,
-        help="port number to listen on (default: " + str(_default_port) + ")")
+        "-p", "--port", type="int", dest="port", default=DEFAULT_PORT,
+        help="port number to listen on (default: " + str(DEFAULT_PORT) + ")")
     parser.add_option(
         "-e", "--editor", dest="editor", default=_default_editor,
         help='text editor to spawn (default: "' + _default_editor + '")')
