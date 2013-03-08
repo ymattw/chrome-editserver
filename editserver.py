@@ -17,13 +17,16 @@
 # along with this program; if not, write to the Free Software Foundation,
 # Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #
-import cgi, urlparse
-import subprocess
-import tempfile, time
-import os, sys, re
-import stat
+import BaseHTTPServer
+import cgi
 import optparse
-from BaseHTTPServer import BaseHTTPRequestHandler, HTTPServer
+import os
+import re
+import stat
+import subprocess
+import sys
+import tempfile
+import time
 
 _default_port = 9292
 _default_editor = "/Applications/MacVim.app/Contents/MacOS/MacVim,-c," + \
@@ -32,7 +35,7 @@ _default_editor = "/Applications/MacVim.app/Contents/MacOS/MacVim,-c," + \
 temp_has_delete=True
 processes = {}
 
-class Handler(BaseHTTPRequestHandler):
+class Handler(BaseHTTPServer.BaseHTTPRequestHandler):
     global temp_has_delete
 
     def do_GET(self):
@@ -168,7 +171,7 @@ def main():
     options = parse_options()
     Handler.editor = options.editor
     try:
-        httpserv = HTTPServer(('localhost', options.port), Handler)
+        httpserv = BaseHTTPServer.HTTPServer(('localhost', options.port), Handler)
         httpserv.table = {}
         httpserv.serve_forever()
     except KeyboardInterrupt:
