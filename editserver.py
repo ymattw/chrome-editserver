@@ -29,8 +29,7 @@ import tempfile
 import time
 
 _default_port = 9292
-_default_editor = "/Applications/MacVim.app/Contents/MacOS/MacVim,-c," + \
-        "set sts=3 sw=3 et sr spell fo= si columns=120"
+_default_editor = "rgvim,-f"
 
 temp_has_delete=True
 processes = {}
