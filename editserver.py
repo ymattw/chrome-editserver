@@ -21,6 +21,7 @@ import BaseHTTPServer
 import cgi
 import optparse
 import os
+import platform
 import re
 import stat
 import subprocess
@@ -162,7 +163,6 @@ def parse_options():
 
 def main():
     global temp_has_delete
-    import platform
     t = platform.python_version_tuple()
     if int(t[0]) == 2 and int(t[1]) < 6:
         temp_has_delete = False;
