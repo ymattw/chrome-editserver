@@ -29,7 +29,7 @@ import tempfile
 import time
 
 DEFAULT_PORT = 9292
-_default_editor = "rgvim,-f"
+DEFAULT_EDITOR = "rgvim,-f"
 
 temp_has_delete=True
 processes = {}
@@ -156,8 +156,8 @@ def parse_options():
         "-p", "--port", type="int", dest="port", default=DEFAULT_PORT,
         help="port number to listen on (default: " + str(DEFAULT_PORT) + ")")
     parser.add_option(
-        "-e", "--editor", dest="editor", default=_default_editor,
-        help='text editor to spawn (default: "' + _default_editor + '")')
+        "-e", "--editor", dest="editor", default=DEFAULT_EDITOR,
+        help='text editor to spawn (default: "' + DEFAULT_EDITOR + '")')
     return parser.parse_args()[0]
 
 def main():
