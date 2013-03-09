@@ -32,7 +32,10 @@ import time
 DEFAULT_PORT = 9292
 DEFAULT_EDITOR = "rgvim,-f"
 
-temp_has_delete=True
+temp_has_delete = platform.python_version_tuple()[:2] >= ("2", "6")
+if not temp_has_delete:
+    print "Handling lack of delete for NamedTemporaryFile:", temp_has_delete
+
 processes = {}
 
 class Handler(BaseHTTPServer.BaseHTTPRequestHandler):
@@ -163,9 +166,6 @@ def parse_options():
 
 def main():
     global temp_has_delete
-    temp_has_delete = platform.python_version_tuple()[:2] >= ("2", "6")
-    if not temp_has_delete:
-        print "Handling lack of delete for NamedTemporaryFile:", temp_has_delete
     options = parse_options()
     Handler.editor = options.editor
     try:
