@@ -159,6 +159,18 @@ class Handler(BaseHTTPServer.BaseHTTPRequestHandler):
             self.send_error(404, "Not Found: %s" % self.path)
 
 
+def runServer(editor=DEFAULT_EDITOR, port=DEFAULT_PORT):
+    """Run an edit-server.
+    """
+    try:
+        Handler.editor = editor
+
+        httpserv = BaseHTTPServer.HTTPServer(("localhost", port), Handler)
+        httpserv.table = {}
+        httpserv.serve_forever()
+    except KeyboardInterrupt:
+        httpserv.socket.close()
+
 if __name__ == '__main__':
     parser = optparse.OptionParser()
     parser.add_option(
@@ -174,10 +186,4 @@ if __name__ == '__main__':
         help='text editor to spawn (default: "' + DEFAULT_EDITOR + '")')
     options = parser.parse_args()[0]
 
-    Handler.editor = options.editor
-    try:
-        httpserv = BaseHTTPServer.HTTPServer(('localhost', options.port), Handler)
-        httpserv.table = {}
-        httpserv.serve_forever()
-    except KeyboardInterrupt:
-        httpserv.socket.close()
+    runServer(editor=options.editor, port=options.port)
