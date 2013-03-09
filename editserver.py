@@ -159,7 +159,7 @@ class Handler(BaseHTTPServer.BaseHTTPRequestHandler):
             self.send_error(404, "Not Found: %s" % self.path)
 
 
-def main():
+if __name__ == '__main__':
     parser = optparse.OptionParser()
     parser.add_option(
         "-p", "--port",
@@ -181,6 +181,3 @@ def main():
         httpserv.serve_forever()
     except KeyboardInterrupt:
         httpserv.socket.close()
-
-if __name__ == '__main__':
-    main()
