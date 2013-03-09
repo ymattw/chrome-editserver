@@ -72,9 +72,6 @@ class Handler(BaseHTTPServer.BaseHTTPRequestHandler):
             length = int(length)
             body = self.rfile.read(length)
 
-            l = [s for s in self.path.split("/") if s]
-            print l
-
             existing_file = self.headers.getheader("X-File")
 
             # write text into file
