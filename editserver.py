@@ -19,6 +19,7 @@
 
 import BaseHTTPServer
 import cgi
+import logging
 import optparse
 import os
 import platform
@@ -31,6 +32,10 @@ import time
 
 DEFAULT_PORT = 9292
 DEFAULT_EDITOR = "rgvim,-f"
+
+logging.basicConfig(
+    format="%(asctime)s - %(message)s",
+    level=logging.INFO)
 
 TEMP_HAS_DELETE = platform.python_version_tuple()[:2] >= ("2", "6")
 if not TEMP_HAS_DELETE:
