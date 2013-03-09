@@ -110,14 +110,18 @@ class Handler(BaseHTTPServer.BaseHTTPRequestHandler):
             rc = None
             while (True):
                 time.sleep(1)
+
                 rc = p.poll()
-                if rc != None: break
+                if rc != None:
+                    break
+
                 mod_time = os.stat(fname)[stat.ST_MTIME]
                 if mod_time != last_mod_time:
-                    print "new mod time:", mod_time, " last:", last_mod_time
                     last_mod_time = mod_time
                     saved = True
-                if saved: break
+
+                if saved:
+                    break
 
             if saved or not rc:
                 self.send_response(200)
