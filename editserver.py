@@ -21,7 +21,6 @@ import BaseHTTPServer
 import logging
 import optparse
 import os
-import platform
 import re
 import stat
 import subprocess
@@ -34,10 +33,6 @@ DEFAULT_EDITOR = "rgvim,-f"
 logging.basicConfig(
     format="%(asctime)s - %(message)s",
     level=logging.INFO)
-
-TEMP_HAS_DELETE = platform.python_version_tuple()[:2] >= ("2", "6")
-if not TEMP_HAS_DELETE:
-    logging.info("Handling lack of delete for NamedTemporaryFile")
 
 _processes = {}
 
@@ -81,13 +76,9 @@ class Handler(BaseHTTPServer.BaseHTTPRequestHandler):
                     prefix += re.sub("[^.\w]", "_", re.sub("^.*?//", "", url))
                     prefix += "_"
 
-                if TEMP_HAS_DELETE:
-                    f = tempfile.NamedTemporaryFile(
-                        delete=False, prefix=prefix, suffix=".txt")
-                    fname = f.name
-                else:
-                    (fhandle, fname) = tempfile.mkstemp(prefix=prefix, suffix=".txt")
-                    f = os.fdopen(fhandle,"w")
+                f = tempfile.NamedTemporaryFile(
+                    delete=False, prefix=prefix, suffix=".txt")
+                fname = f.name
 
             else:
                 existing = True
