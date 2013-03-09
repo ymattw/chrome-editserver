@@ -101,12 +101,8 @@ class Handler(BaseHTTPServer.BaseHTTPRequestHandler):
             last_mod_time = os.stat(fname)[stat.ST_MTIME]
 
             if not existing:
-                # spawn editor...
-                print "Spawning editor... ", fname
-
                 cmd = self.editor.split(",")
                 cmd.append(fname)
-                print cmd
                 p = subprocess.Popen(cmd, close_fds=True)
                 self.processes[fname] = p
 
