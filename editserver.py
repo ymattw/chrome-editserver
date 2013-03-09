@@ -46,6 +46,7 @@ processes = {}
 class Handler(BaseHTTPServer.BaseHTTPRequestHandler):
     """Handler for an edit-server.
     """
+    processes = processes
 
     def do_GET(self):
         """Handle a GET-request.
@@ -61,7 +62,6 @@ class Handler(BaseHTTPServer.BaseHTTPRequestHandler):
     def do_POST(self):
         """Handle a POST-request.
         """
-        global processes
         try:
             (content, params) = cgi.parse_header(self.headers.getheader("content-type"))
 
@@ -103,7 +103,7 @@ class Handler(BaseHTTPServer.BaseHTTPRequestHandler):
                 print "Opening new file ", fname
             else:
                 existing = True
-                p = processes[existing_file]
+                p = self.processes[existing_file]
                 print "Opening existing file ", existing_file
                 f = open(existing_file, "w")
                 fname = existing_file
@@ -120,7 +120,7 @@ class Handler(BaseHTTPServer.BaseHTTPRequestHandler):
                 cmd.append(fname)
                 print cmd
                 p = subprocess.Popen(cmd, close_fds=True)
-                processes[fname] = p
+                self.processes[fname] = p
 
             saved = False
             rc = None
