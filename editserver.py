@@ -44,6 +44,8 @@ if not TEMP_HAS_DELETE:
 processes = {}
 
 class Handler(BaseHTTPServer.BaseHTTPRequestHandler):
+    """Handler for an edit-server.
+    """
 
     def do_GET(self):
         if self.path == "/status":
