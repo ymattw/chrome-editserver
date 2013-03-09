@@ -54,9 +54,9 @@ class Handler(BaseHTTPServer.BaseHTTPRequestHandler):
             self.send_response(200)
             self.send_header("Content-Type", "text/plain; charset=utf-8")
             self.end_headers()
-            self.wfile.write("edit-server is running.\n")
+            self.wfile.write("Edit-server is running.\n")
         else:
-            self.send_error(404, "GET Not Found: %s" % self.path)
+            self.send_error(404, "Not found: %s" % self.path)
 
     def do_POST(self):
         """Handle a POST-request.
