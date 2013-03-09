@@ -46,21 +46,21 @@ processes = {}
 class Handler(BaseHTTPServer.BaseHTTPRequestHandler):
 
     def do_GET(self):
-        if self.path == '/status':
+        if self.path == "/status":
             self.send_response(200)
-            self.send_header('Content-Type', 'text/plain; charset=utf-8')
+            self.send_header("Content-Type", "text/plain; charset=utf-8")
             self.end_headers()
-            self.wfile.write('edit-server is running.\n')
+            self.wfile.write("edit-server is running.\n")
             return
         self.send_error(404, "GET Not Found: %s" % self.path)
 
     def do_POST(self):
         global processes
         try:
-            (content, params) = cgi.parse_header(self.headers.getheader('content-type'))
+            (content, params) = cgi.parse_header(self.headers.getheader("content-type"))
 
             clength = 0
-            cl = self.headers.getheader('content-length')
+            cl = self.headers.getheader("content-length")
 
             if cl != None:
                 clength = int(cl)
@@ -72,15 +72,15 @@ class Handler(BaseHTTPServer.BaseHTTPRequestHandler):
             body = self.rfile.read(clength)
             print body
 
-            l = [s for s in self.path.split('/') if s]
+            l = [s for s in self.path.split("/") if s]
             print l
 
-            existing_file = self.headers.getheader('x-file')
+            existing_file = self.headers.getheader("x-file")
 
             # write text into file
             if not existing_file or existing_file == "undefined":
                 existing = False
-                url = self.headers.getheader('x-url')
+                url = self.headers.getheader("x-url")
                 print "url:", url
                 prefix = "chrome_"
                 if url:
@@ -88,10 +88,10 @@ class Handler(BaseHTTPServer.BaseHTTPRequestHandler):
                 prefix += "_"
                 if TEMP_HAS_DELETE==True:
                     f = tempfile.NamedTemporaryFile(
-                            delete=False, prefix=prefix, suffix='.txt')
+                            delete=False, prefix=prefix, suffix=".txt")
                     fname = f.name
                 else:
-                    tf = tempfile.mkstemp(prefix=prefix, suffix='.txt')
+                    tf = tempfile.mkstemp(prefix=prefix, suffix=".txt")
                     f = os.fdopen(tf[0],"w")
                     fname = tf[1]
                 print "Opening new file ", fname
@@ -132,18 +132,18 @@ class Handler(BaseHTTPServer.BaseHTTPRequestHandler):
             if saved or not rc:
                 self.send_response(200)
 
-                f = file(fname, 'r')
+                f = file(fname, "r")
                 s = f.read()
                 f.close()
             else:
                 if rc > 0:
-                    msg = 'text editor returned %d' % rc
+                    msg = "text editor returned %d" % rc
                 elif rc < 0:
-                    msg = 'text editor died on signal %d' % -rc
+                    msg = "text editor died on signal %d" % -rc
                 self.send_error(404, msg)
 
             if saved:
-                self.send_header('x-open', "true")
+                self.send_header("x-open", "true")
             else:
                 try:
                     os.unlink(fname)
@@ -151,7 +151,7 @@ class Handler(BaseHTTPServer.BaseHTTPRequestHandler):
                     print "Unable to unlink:", fname
                     pass
 
-            self.send_header('x-file', fname)
+            self.send_header("x-file", fname)
             self.end_headers()
             self.wfile.write(s)
         except :
@@ -171,7 +171,7 @@ def runServer(editor=DEFAULT_EDITOR, port=DEFAULT_PORT):
     except KeyboardInterrupt:
         server.socket.close()
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     parser = optparse.OptionParser()
     parser.add_option(
         "-p", "--port",
