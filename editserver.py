@@ -64,10 +64,10 @@ class Handler(BaseHTTPServer.BaseHTTPRequestHandler):
         """Handle a POST-request.
         """
         try:
-            (content, params) = cgi.parse_header(self.headers.getheader("content-type"))
+            (content, params) = cgi.parse_header(self.headers.getheader("Content-Type"))
 
             clength = 0
-            cl = self.headers.getheader("content-length")
+            cl = self.headers.getheader("Content-Length")
 
             if cl != None:
                 clength = int(cl)
@@ -82,12 +82,12 @@ class Handler(BaseHTTPServer.BaseHTTPRequestHandler):
             l = [s for s in self.path.split("/") if s]
             print l
 
-            existing_file = self.headers.getheader("x-file")
+            existing_file = self.headers.getheader("X-File")
 
             # write text into file
             if not existing_file or existing_file == "undefined":
                 existing = False
-                url = self.headers.getheader("x-url")
+                url = self.headers.getheader("X-Url")
                 print "url:", url
                 prefix = "chrome_"
                 if url:
@@ -150,7 +150,7 @@ class Handler(BaseHTTPServer.BaseHTTPRequestHandler):
                 self.send_error(404, msg)
 
             if saved:
-                self.send_header("x-open", "true")
+                self.send_header("X-Open", "true")
             else:
                 try:
                     os.unlink(fname)
@@ -158,7 +158,7 @@ class Handler(BaseHTTPServer.BaseHTTPRequestHandler):
                     print "Unable to unlink:", fname
                     pass
 
-            self.send_header("x-file", fname)
+            self.send_header("X-File", fname)
             self.end_headers()
             self.wfile.write(s)
         except :
