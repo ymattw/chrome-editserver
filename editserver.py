@@ -48,6 +48,8 @@ class Handler(BaseHTTPServer.BaseHTTPRequestHandler):
     """
 
     def do_GET(self):
+        """Handle a GET-request.
+        """
         if self.path == "/status":
             self.send_response(200)
             self.send_header("Content-Type", "text/plain; charset=utf-8")
