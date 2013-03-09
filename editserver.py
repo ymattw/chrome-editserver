@@ -142,7 +142,6 @@ class Handler(BaseHTTPServer.BaseHTTPRequestHandler):
                 try:
                     os.unlink(fname)
                 except :
-                    print "Unable to unlink:", fname
                     pass
 
             self.send_header("X-File", fname)
