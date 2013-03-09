@@ -32,9 +32,9 @@ import time
 DEFAULT_PORT = 9292
 DEFAULT_EDITOR = "rgvim,-f"
 
-temp_has_delete = platform.python_version_tuple()[:2] >= ("2", "6")
-if not temp_has_delete:
-    print "Handling lack of delete for NamedTemporaryFile:", temp_has_delete
+TEMP_HAS_DELETE = platform.python_version_tuple()[:2] >= ("2", "6")
+if not TEMP_HAS_DELETE:
+    print "Handling lack of delete for NamedTemporaryFile:", TEMP_HAS_DELETE
 
 processes = {}
 
@@ -81,7 +81,7 @@ class Handler(BaseHTTPServer.BaseHTTPRequestHandler):
                 if url:
                     prefix += re.sub("[^.\w]", "_", re.sub("^.*?//","",url))
                 prefix += "_"
-                if temp_has_delete==True:
+                if TEMP_HAS_DELETE==True:
                     f = tempfile.NamedTemporaryFile(
                             delete=False, prefix=prefix, suffix='.txt')
                     fname = f.name
