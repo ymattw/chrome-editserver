@@ -63,18 +63,14 @@ class Handler(BaseHTTPServer.BaseHTTPRequestHandler):
         """Handle a POST-request.
         """
         try:
-            clength = 0
-            cl = self.headers.getheader("Content-Length")
-
-            if cl != None:
-                clength = int(cl)
-            else:
+            length = self.headers.getheader("Content-Length")
+            if length is None:
                 self.send_response(411)
                 self.end_headers()
                 return
 
-            body = self.rfile.read(clength)
-            print body
+            length = int(length)
+            body = self.rfile.read(length)
 
             l = [s for s in self.path.split("/") if s]
             print l
