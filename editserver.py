@@ -25,7 +25,6 @@ import platform
 import re
 import stat
 import subprocess
-import sys
 import tempfile
 import time
 
@@ -147,8 +146,7 @@ class Handler(BaseHTTPServer.BaseHTTPRequestHandler):
             self.send_header("X-File", fname)
             self.end_headers()
             self.wfile.write(s)
-        except :
-            print "Error: ", sys.exc_info()[0]
+        except:
             self.send_error(404, "Not Found: %s" % self.path)
 
 
