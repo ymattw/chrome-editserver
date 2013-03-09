@@ -73,29 +73,26 @@ class Handler(BaseHTTPServer.BaseHTTPRequestHandler):
             body = self.rfile.read(length)
 
             existing_file = self.headers.getheader("X-File")
-
-            # write text into file
             if not existing_file or existing_file == "undefined":
                 existing = False
                 url = self.headers.getheader("X-Url")
-                print "url:", url
+
                 prefix = "chrome_"
                 if url:
-                    prefix += re.sub("[^.\w]", "_", re.sub("^.*?//","",url))
-                prefix += "_"
-                if TEMP_HAS_DELETE==True:
+                    prefix += re.sub("[^.\w]", "_", re.sub("^.*?//", "", url))
+                    prefix += "_"
+
+                if TEMP_HAS_DELETE:
                     f = tempfile.NamedTemporaryFile(
-                            delete=False, prefix=prefix, suffix=".txt")
+                        delete=False, prefix=prefix, suffix=".txt")
                     fname = f.name
                 else:
-                    tf = tempfile.mkstemp(prefix=prefix, suffix=".txt")
-                    f = os.fdopen(tf[0],"w")
-                    fname = tf[1]
-                print "Opening new file ", fname
+                    (fhandle, fname) = tempfile.mkstemp(prefix=prefix, suffix=".txt")
+                    f = os.fdopen(fhandle,"w")
+
             else:
                 existing = True
                 p = self.processes[existing_file]
-                print "Opening existing file ", existing_file
                 f = open(existing_file, "w")
                 fname = existing_file
 
