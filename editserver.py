@@ -41,12 +41,12 @@ TEMP_HAS_DELETE = platform.python_version_tuple()[:2] >= ("2", "6")
 if not TEMP_HAS_DELETE:
     print "Handling lack of delete for NamedTemporaryFile:", TEMP_HAS_DELETE
 
-processes = {}
+_processes = {}
 
 class Handler(BaseHTTPServer.BaseHTTPRequestHandler):
     """Handler for an edit-server.
     """
-    processes = processes
+    processes = _processes
 
     def do_GET(self):
         """Handle a GET-request.
