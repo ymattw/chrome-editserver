@@ -59,6 +59,8 @@ class Handler(BaseHTTPServer.BaseHTTPRequestHandler):
             self.send_error(404, "GET Not Found: %s" % self.path)
 
     def do_POST(self):
+        """Handle a POST-request.
+        """
         global processes
         try:
             (content, params) = cgi.parse_header(self.headers.getheader("content-type"))
