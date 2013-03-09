@@ -182,8 +182,10 @@ def runServer(editor=DEFAULT_EDITOR, port=DEFAULT_PORT):
 
         server = BaseHTTPServer.HTTPServer(("localhost", port), Handler)
         server.table = {}
+        logging.info("Starting up the edit-server")
         server.serve_forever()
     except KeyboardInterrupt:
+        logging.info("Closing down the edit-server")
         server.socket.close()
 
 if __name__ == "__main__":
