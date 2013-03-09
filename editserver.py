@@ -165,11 +165,11 @@ def runServer(editor=DEFAULT_EDITOR, port=DEFAULT_PORT):
     try:
         Handler.editor = editor
 
-        httpserv = BaseHTTPServer.HTTPServer(("localhost", port), Handler)
-        httpserv.table = {}
-        httpserv.serve_forever()
+        server = BaseHTTPServer.HTTPServer(("localhost", port), Handler)
+        server.table = {}
+        server.serve_forever()
     except KeyboardInterrupt:
-        httpserv.socket.close()
+        server.socket.close()
 
 if __name__ == '__main__':
     parser = optparse.OptionParser()
