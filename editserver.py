@@ -163,9 +163,8 @@ def parse_options():
 
 def main():
     global temp_has_delete
-    t = platform.python_version_tuple()
-    if int(t[0]) == 2 and int(t[1]) < 6:
-        temp_has_delete = False;
+    temp_has_delete = platform.python_version_tuple()[:2] >= ("2", "6")
+    if not temp_has_delete:
         print "Handling lack of delete for NamedTemporaryFile:", temp_has_delete
     options = parse_options()
     Handler.editor = options.editor
