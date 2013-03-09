@@ -166,7 +166,12 @@ def parseOptions():
         default=DEFAULT_EDITOR,
         help='text editor to spawn (default: "' + DEFAULT_EDITOR + '")')
 
-    return parser.parse_args()[0]
+    options = parser.parse_args()[0]
+
+    logging.info("Port is %s" % options.port)
+    logging.info("Editor is %s" % options.editor)
+
+    return options
 
 
 def runServer(editor=DEFAULT_EDITOR, port=DEFAULT_PORT):
