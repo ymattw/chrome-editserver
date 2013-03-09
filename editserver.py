@@ -53,8 +53,8 @@ class Handler(BaseHTTPServer.BaseHTTPRequestHandler):
             self.send_header("Content-Type", "text/plain; charset=utf-8")
             self.end_headers()
             self.wfile.write("edit-server is running.\n")
-            return
-        self.send_error(404, "GET Not Found: %s" % self.path)
+        else:
+            self.send_error(404, "GET Not Found: %s" % self.path)
 
     def do_POST(self):
         global processes
