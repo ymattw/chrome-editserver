@@ -39,7 +39,6 @@ if not temp_has_delete:
 processes = {}
 
 class Handler(BaseHTTPServer.BaseHTTPRequestHandler):
-    global temp_has_delete
 
     def do_GET(self):
         if self.path == '/status':
@@ -165,7 +164,6 @@ def parse_options():
     return parser.parse_args()[0]
 
 def main():
-    global temp_has_delete
     options = parse_options()
     Handler.editor = options.editor
     try:
