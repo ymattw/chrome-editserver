@@ -158,18 +158,22 @@ class Handler(BaseHTTPServer.BaseHTTPRequestHandler):
             print "Error: ", sys.exc_info()[0]
             self.send_error(404, "Not Found: %s" % self.path)
 
-def parse_options():
-    parser = optparse.OptionParser()
-    parser.add_option(
-        "-p", "--port", type="int", dest="port", default=DEFAULT_PORT,
-        help="port number to listen on (default: " + str(DEFAULT_PORT) + ")")
-    parser.add_option(
-        "-e", "--editor", dest="editor", default=DEFAULT_EDITOR,
-        help='text editor to spawn (default: "' + DEFAULT_EDITOR + '")')
-    return parser.parse_args()[0]
 
 def main():
-    options = parse_options()
+    parser = optparse.OptionParser()
+    parser.add_option(
+        "-p", "--port",
+        type="int",
+        dest="port",
+        default=DEFAULT_PORT,
+        help="port number to listen on (default: " + str(DEFAULT_PORT) + ")")
+    parser.add_option(
+        "-e", "--editor",
+        dest="editor",
+        default=DEFAULT_EDITOR,
+        help='text editor to spawn (default: "' + DEFAULT_EDITOR + '")')
+    options = parser.parse_args()[0]
+
     Handler.editor = options.editor
     try:
         httpserv = BaseHTTPServer.HTTPServer(('localhost', options.port), Handler)
