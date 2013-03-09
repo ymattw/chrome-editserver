@@ -46,6 +46,7 @@ _processes = {}
 class Handler(BaseHTTPServer.BaseHTTPRequestHandler):
     """Handler for an edit-server.
     """
+    editor = DEFAULT_EDITOR
     processes = _processes
 
     def do_GET(self):
