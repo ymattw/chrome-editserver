@@ -150,6 +150,25 @@ class Handler(BaseHTTPServer.BaseHTTPRequestHandler):
             self.send_error(404, "Not Found: %s" % self.path)
 
 
+def parseOptions():
+    """Parse the command-line options.
+    """
+    parser = optparse.OptionParser()
+    parser.add_option(
+        "-p", "--port",
+        type="int",
+        dest="port",
+        default=DEFAULT_PORT,
+        help="port number to listen on (default: " + str(DEFAULT_PORT) + ")")
+    parser.add_option(
+        "-e", "--editor",
+        dest="editor",
+        default=DEFAULT_EDITOR,
+        help='text editor to spawn (default: "' + DEFAULT_EDITOR + '")')
+
+    return parser.parse_args()[0]
+
+
 def runServer(editor=DEFAULT_EDITOR, port=DEFAULT_PORT):
     """Run an edit-server.
     """
@@ -163,18 +182,5 @@ def runServer(editor=DEFAULT_EDITOR, port=DEFAULT_PORT):
         server.socket.close()
 
 if __name__ == "__main__":
-    parser = optparse.OptionParser()
-    parser.add_option(
-        "-p", "--port",
-        type="int",
-        dest="port",
-        default=DEFAULT_PORT,
-        help="port number to listen on (default: " + str(DEFAULT_PORT) + ")")
-    parser.add_option(
-        "-e", "--editor",
-        dest="editor",
-        default=DEFAULT_EDITOR,
-        help='text editor to spawn (default: "' + DEFAULT_EDITOR + '")')
-    options = parser.parse_args()[0]
-
+    options = parseOptions()
     runServer(editor=options.editor, port=options.port)
