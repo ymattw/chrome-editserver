@@ -130,9 +130,9 @@ class Handler(BaseHTTPServer.BaseHTTPRequestHandler):
                 f.close()
             else:
                 if rc > 0:
-                    msg = "text editor returned %d" % rc
+                    msg = "Text editor returned %d" % rc
                 elif rc < 0:
-                    msg = "text editor died on signal %d" % -rc
+                    msg = "Text editor died on signal %d" % -rc
                 self.send_error(404, msg)
 
             if saved:
@@ -147,7 +147,7 @@ class Handler(BaseHTTPServer.BaseHTTPRequestHandler):
             self.end_headers()
             self.wfile.write(s)
         except:
-            self.send_error(404, "Not Found: %s" % self.path)
+            self.send_error(404, "Not found: %s" % self.path)
 
 
 def parseOptions():
