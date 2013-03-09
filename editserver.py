@@ -18,7 +18,6 @@
 # Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 import BaseHTTPServer
-import cgi
 import logging
 import optparse
 import os
@@ -64,8 +63,6 @@ class Handler(BaseHTTPServer.BaseHTTPRequestHandler):
         """Handle a POST-request.
         """
         try:
-            (content, params) = cgi.parse_header(self.headers.getheader("Content-Type"))
-
             clength = 0
             cl = self.headers.getheader("Content-Length")
 
